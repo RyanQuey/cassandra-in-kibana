@@ -29,6 +29,8 @@ Since filebeat doesn't have a Cassandra DB module currently, we have to add our 
 
 For this demonstration we are going to largely borrow from Anant's [NodeAnalyzer tool](https://github.com/Anant/cassandra.toolkit/tree/dev/NodeAnalyzer). They have a sample [filebeat config](https://github.com/Anant/cassandra.toolkit/blob/dev/NodeAnalyzer/FilebeatSetup.MD#filebeatyml-usually-sits-in-etcfilebeat) that provides processor settings.
 
+We also made use of The Last Pickle's [filebeat.yml](https://github.com/thelastpickle/docker-cassandra-bootstrap/blob/master/cassandra/config/filebeat.yml) from their [docker Cassandra bootstrap project](https://github.com/thelastpickle/docker-cassandra-bootstrap).
+
 ### Container directory organization
 #### elk container
 - logstash configs (e.g., beats-input.conf): `/etc/logstash/conf.d`
@@ -84,3 +86,10 @@ This is a CLI way of setting up dashboards, rather than just setting them up fro
 
 Should now be able to view [Kibana filebeat dashboards in the Discover view](http://localhost:5601/app/kibana#/discover) (following [these instructions](https://www.elastic.co/guide/en/beats/filebeat/current/view-kibana-dashboards.html). If you don't see any, make sure that the time filters are set around the time frame the logs were added into filebeat NOT when the log event happened. 
 
+# Using Kibana
+
+## Sample Queries/Filters in Kibana for Cassandra
+### Get ERROR level logs for the past 90 days
+- http://localhost:5601/app/kibana#/discover?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-90d,to:now))&_a=(columns:!(ingest.loglevel),filters:!(),index:'filebeat-*',interval:auto,query:(language:lucene,query:'ingest.loglevel:ERROR'),sort:!())
+
+Filters using lucene query: `ingest.loglevel:ERROR`
