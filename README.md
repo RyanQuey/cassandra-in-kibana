@@ -93,3 +93,8 @@ Should now be able to view [Kibana filebeat dashboards in the Discover view](htt
 - http://localhost:5601/app/kibana#/discover?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-90d,to:now))&_a=(columns:!(ingest.loglevel),filters:!(),index:'filebeat-*',interval:auto,query:(language:lucene,query:'ingest.loglevel:ERROR'),sort:!())
 
 Filters using lucene query: `ingest.loglevel:ERROR`
+
+### Save progress (export kibana data to version control)
+`./scripts/export-kibana-dashboards.sh`
+
+TODO make an import script using [this](https://www.elastic.co/guide/en/kibana/7.8/dashboard-api.html)
