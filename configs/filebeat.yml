@@ -13,6 +13,11 @@ output:
     #   certificate_authorities:
     #     - /etc/pki/tls/certs/logstash-beats.crt
 
+# setup filebeat for kibana
+setup: 
+  kibana: 
+    host: "http://elk:5601"
+
 filebeat:
   inputs:
     - paths:
