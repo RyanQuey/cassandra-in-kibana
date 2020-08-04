@@ -1,0 +1,22 @@
+# references: https://github.com/thelastpickle/docker-cassandra-bootstrap/blob/master/cassandra/config/filebeat.yml
+output:
+  logstash:
+    enabled: true
+
+    # reference container name given in docker-compose.yml (elk)
+    # https://www.elastic.co/guide/en/beats/filebeat/current/logstash-output.html
+    hosts: ["elk:5044"]
+    timeout: 15
+
+    # Disable ssl for now
+    # ssl:
+    #   certificate_authorities:
+    #     - /etc/pki/tls/certs/logstash-beats.crt
+
+filebeat:
+  inputs:
+    - paths:
+        # should get system.log, debug.log, gc.log.*.current, gremlin.log, output.log, maybe more depending on their setup
+        - "/var/log/cassandra/*.log"
+        - "/var/log/cassandra/gc.log*"
+      document_type: cassandra_logs

@@ -1,6 +1,33 @@
-elk:
-  image: sebp/elk:780
-  ports:
-    - "5601:5601"
-    - "9200:9200"
-    - "5044:5044"
+version: '3.8'
+services: 
+  elk:
+    container_name: elk
+    build: 
+      context: .
+      dockerfile: Dockerfile.elk
+      # do it this way, to get from .env to Dockerfile, since Dockerfile doesn't read from .env on its own
+      args: 
+        elk_version: ${ELK_VERSION}
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    networks:
+      - elastic      
+  # https://www.elastic.co/guide/en/beats/filebeat/7.8/running-on-docker.html#_run_the_filebeat_setup
+  filebeat: 
+    container_name: filebeat
+    build: 
+      context: .
+      dockerfile: Dockerfile.filebeat
+      # do it this way, to get from .env to Dockerfile, since Dockerfile doesn't read from .env on its own
+      args: 
+        version: ${VERSION}
+    environment:
+      - setup.kibana.host=elk:5601
+      - output.elasticsearch.hosts=["elk:9200"]
+    networks:
+      - elastic      
+networks:
+  elastic:
+    driver: bridge

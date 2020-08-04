@@ -1,0 +1,5 @@
+# https://www.elastic.co/guide/en/beats/filebeat/7.8/running-on-docker.html#_custom_image_configuration
+ARG elk_version
+FROM sebp/elk:${elk_version}
+# overwrite their default config
+COPY configs/02-beats-input.conf /etc/logstash/conf.d/02-beats-input.conf
