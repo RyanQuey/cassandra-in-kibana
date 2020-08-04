@@ -38,26 +38,24 @@ processors:
   #- add_docker_metadata: ~ 
   #- add_kubernetes_metadata: 
   
-#------------------------------------- system messages 
-  - dissect:
-      tokenizer: "%{timestamp} %{+timestamp->} %{+timestamp} %{+timestamp} %{system-host-name} %{component}: %{message}"
-      field: "message"
-      target_prefix: "ingest"
-
-  - dissect:
-      tokenizer: "/%{}/%{}/%{}/%{}/%{}/cass.stat.%{incident-id}/%{host-name}/system/"
-      field: "log.file.path"
-      target_prefix: "ingest"
-
 #-#------------------------------------ cassandra   
+  # note that getting these timestamps correct is important, since if we do not extract these timestamps we only have time when filebeat got the logs, not the event time
+  # note that this strips out the milliseconds from timestamp (which was originally after the comma). Is an easy change if we want to though
+  # also removes `.class` from the java class and line numbers, for easy reading
+  # handles e.g., `INFO  [main] 2020-07-06 05:50:09,721  PluginBean.java:53 - CqlSlowLog plugin is now enabled`
   - dissect:
-      tokenizer: "%{loglevel} [%{component}] %{timestamp} %{+timestamp},%{} %{class}.%{}:%{} - %{message}"
+      tokenizer: "%{loglevel} [%{component}] %{timestamp} %{+timestamp},%{} %{javaclass}.%{}:%{} - %{message}"
+      # what we try to tokenize
       field: "message"
+
+      # what we convert it to
       target_prefix: "ingest"
-  - dissect:
-      tokenizer: "/%{}/%{}/%{}/%{}/%{}/cass.stat.%{incident-id}/%{host-name}/cassandra/"
-      field: "log.file.path"
-      target_prefix: "ingest"
+
+      # even better than adding specific amount of spaces before and after fields in the tokenizer
+      # we can be flexible on space amounts but still strip whitespaces from field values
+      trim_values: all
+
+  # here we run more processing on the event timestamps we extract (?)
   - timestamp:
       field: "ingest.timestamp"
       layouts:
@@ -70,5 +68,6 @@ processors:
         - '2020-06-13 12:57:30'
       ignore_failure: true
       target_field: "@timestamp"
+
   - include_fields:
-      fields: [ "ingest", "message","log","input" ]
+      fields: [ "ingest", "message", "log", "input" ]
