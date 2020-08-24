@@ -1,4 +1,5 @@
 # references: https://github.com/thelastpickle/docker-cassandra-bootstrap/blob/master/cassandra/config/filebeat.yml
+# https://github.com/Anant/cassandra.toolkit/blob/dev/log-analysis/FilebeatSetup.MD#filebeatyml-usually-sits-in-etcfilebeat
 output:
   logstash:
     enabled: true
