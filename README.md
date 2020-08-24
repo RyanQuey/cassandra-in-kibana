@@ -27,7 +27,7 @@ Check that it shows up in ES by hitting `http://localhost:9200/logstash-*/_searc
 ### Processing (ie parsing) Cassandra logs
 Since filebeat doesn't have a Cassandra DB module currently, we have to add our own [filebeat processor](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) to filter and enhance the logs. 
 
-For this demonstration we are going to largely borrow from Anant's [NodeAnalyzer tool](https://github.com/Anant/cassandra.toolkit/tree/dev/NodeAnalyzer). They have a sample [filebeat config](https://github.com/Anant/cassandra.toolkit/blob/dev/NodeAnalyzer/FilebeatSetup.MD#filebeatyml-usually-sits-in-etcfilebeat) that provides processor settings.
+For this demonstration we are going to largely borrow from Anant's [NodeAnalyzer tool](https://github.com/Anant/cassandra.toolkit/tree/dev/NodeAnalyzer). They have a sample [filebeat config](https://github.com/Anant/cassandra.toolkit/blob/dev/log-analysis/FilebeatSetup.MD#filebeatyml-usually-sits-in-etcfilebeat) that provides processor settings.
 
 We also made use of The Last Pickle's [filebeat.yml](https://github.com/thelastpickle/docker-cassandra-bootstrap/blob/master/cassandra/config/filebeat.yml) from their [docker Cassandra bootstrap project](https://github.com/thelastpickle/docker-cassandra-bootstrap).
 
