@@ -8,6 +8,9 @@ docker-compose up
 
 See [here](https://elk-docker.readthedocs.io/#installation) for more info on how it works.
 
+![image](https://raw.githubusercontent.com/RyanQuey/cassandra-in-kibana/master/screenshots/kibana-full-dashboard-for-cassandra-logs.png)
+
+
 ## Test that it is working
 Add a dummy log (see instructions [here](https://elk-docker.readthedocs.io/#usage))
 ```
@@ -21,6 +24,8 @@ demo log entry
 ```
 
 Check that it shows up in ES by hitting `http://localhost:9200/logstash-*/_search?pretty&size=1000`. It should show up somewhere in one of the entries. (This will get records from indices that start with logstash-*).
+
+![image](https://raw.githubusercontent.com/RyanQuey/cassandra-in-kibana/master/screenshots/kibana-discover-view-search-by-file-name-TOKENIZED.png)
 
 ## Setup Filebeat
 
