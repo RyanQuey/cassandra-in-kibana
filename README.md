@@ -80,6 +80,8 @@ docker cp configs/filebeat.yml filebeat:/usr/share/filebeat/filebeat.yml
 docker restart filebeat
 ```
 
+Note that the config files are found in `/usr/share/filebeat/` rather than `/etc/filebeat`
+
 ### Setup Kibana Dashboards for filebeat
 https://www.elastic.co/guide/en/beats/filebeat/current/load-kibana-dashboards.html
 
