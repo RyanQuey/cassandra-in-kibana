@@ -3,7 +3,8 @@
 ```bash
 # actually sets for docker container as well
 sudo sysctl -w vm.max_map_count=262144
-docker-compose up
+# 780 = es 7.8.0; VERSION is for filebeat
+export ELK_VERSION=780 && export VERSION=7.8.0 && docker-compose up
 ```
 
 See [here](https://elk-docker.readthedocs.io/#installation) for more info on how it works.
