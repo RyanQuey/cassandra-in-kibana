@@ -88,4 +88,4 @@ processors:
       target_field: "@timestamp"
 
   - include_fields:
-      fields: [ "ingest", "message", "log", "input" ]
+      fields: [ "tags", "ingest", "message", "log", "input" ]
