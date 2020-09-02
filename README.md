@@ -3,7 +3,8 @@
 ```bash
 # actually sets for docker container as well
 sudo sysctl -w vm.max_map_count=262144
-docker-compose up
+# 780 = es 7.8.0; VERSION is for filebeat
+export ELK_VERSION=780 && export VERSION=7.8.0 && docker-compose up -d 
 ```
 
 See [here](https://elk-docker.readthedocs.io/#installation) for more info on how it works.
@@ -78,6 +79,8 @@ This WON'T work, since need to change permissions (see the `Dockerfile.filebeat`
 docker cp configs/filebeat.yml filebeat:/usr/share/filebeat/filebeat.yml
 docker restart filebeat
 ```
+
+Note that the config files are found in `/usr/share/filebeat/` rather than `/etc/filebeat`
 
 ### Setup Kibana Dashboards for filebeat
 https://www.elastic.co/guide/en/beats/filebeat/current/load-kibana-dashboards.html
